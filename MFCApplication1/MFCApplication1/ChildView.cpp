@@ -24,9 +24,12 @@ CChildView::~CChildView()
 
 BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_PAINT()
-	ON_COMMAND(ID_COLOR_RED, &CChildView::OnColorRed)
-	ON_COMMAND(ID_COLOR_GREEN, &CChildView::OnColorGreen)
 	ON_COMMAND(ID_COLOR_BLUE, &CChildView::OnColorBlue)
+	ON_COMMAND(ID_COLOR_GREEN, &CChildView::OnColorGreen)
+	ON_COMMAND(ID_COLOR_RED, &CChildView::OnColorRed)
+	ON_UPDATE_COMMAND_UI(ID_COLOR_BLUE, &CChildView::OnUpdateColorBlue)
+	ON_UPDATE_COMMAND_UI(ID_COLOR_GREEN, &CChildView::OnUpdateColorGreen)
+	ON_UPDATE_COMMAND_UI(ID_COLOR_RED, &CChildView::OnUpdateColorRed)
 END_MESSAGE_MAP()
 
 
@@ -46,17 +49,16 @@ BOOL CChildView::PreCreateWindow(CREATESTRUCT& cs)
 	return TRUE;
 }
 
-void CChildView::OnPaint() 
+void CChildView::OnPaint()
 {
 	CPaintDC dc(this); // 그리기를 위한 디바이스 컨텍스트입니다.
 	CBrush brush(m_color);
 	dc.SelectObject(&brush);
 	dc.Rectangle(100, 100, 300, 300);
 	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
-	
+
 	// 그리기 메시지에 대해서는 CWnd::OnPaint()를 호출하지 마십시오.
 }
-
 
 
 void CChildView::OnColorRed()
@@ -77,7 +79,40 @@ void CChildView::OnColorGreen()
 
 void CChildView::OnColorBlue()
 {
-	m_color = RGB(0, 0, 255); 
+	m_color = RGB(0, 0, 255);
 	Invalidate();
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+}
+
+void CChildView::OnUpdateColorRed(CCmdUI *pCmdUI)
+{
+	if (m_color == RGB(255, 0, 0)) {
+		pCmdUI->SetCheck(true);
+	}
+	else {
+		pCmdUI->SetCheck(false);
+	}
+	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
+}
+
+void CChildView::OnUpdateColorGreen(CCmdUI *pCmdUI)
+{
+	if (m_color == RGB(0, 255, 0)) {
+		pCmdUI->SetCheck(true);
+	}
+	else {
+		pCmdUI->SetCheck(false);
+	}
+	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
+}
+
+void CChildView::OnUpdateColorBlue(CCmdUI *pCmdUI)
+{
+	if (m_color == RGB(0, 0, 255)) {
+		pCmdUI->SetCheck(true);
+	}
+	else {
+		pCmdUI->SetCheck(false);
+	}
+	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
 }

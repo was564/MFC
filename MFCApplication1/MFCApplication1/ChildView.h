@@ -11,21 +11,21 @@
 class CChildView : public CWnd
 {
 	COLORREF m_color;
-// 생성입니다.
+	// 생성입니다.
 public:
 	CChildView();
 
-// 특성입니다.
+	// 특성입니다.
 public:
 
-// 작업입니다.
+	// 작업입니다.
 public:
 
-// 재정의입니다.
-	protected:
+	// 재정의입니다.
+protected:
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 
-// 구현입니다.
+	// 구현입니다.
 public:
 	virtual ~CChildView();
 
@@ -34,8 +34,11 @@ protected:
 	afx_msg void OnPaint();
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnColorRed();
-	afx_msg void OnColorGreen();
 	afx_msg void OnColorBlue();
+	afx_msg void OnColorGreen();
+	afx_msg void OnColorRed();
+	afx_msg void OnUpdateColorBlue(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateColorGreen(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateColorRed(CCmdUI *pCmdUI);
 };
 

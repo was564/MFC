@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{B8F46F17-05EF-4C33-AEB3-4643BE8918CC}</ProjectGuid>
+    <ProjectGuid>{43F37ACE-0AF8-4388-A35E-973A66077E1C}</ProjectGuid>
     <Keyword>MFCProj</Keyword>
     <RootNamespace>MFCApplication1</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
@@ -205,6 +205,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\MFCApplication1.ico" />
+    <Image Include="res\Toolbar.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
