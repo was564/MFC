@@ -70,6 +70,15 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	EnableDocking(CBRS_ALIGN_ANY);
 	DockControlBar(&m_wndToolBar);
 
+	/* 코딩으로 메뉴 만드는 법 */
+	CMenu Popup;
+	Popup.CreatePopupMenu();
+	Popup.AppendMenu(MF_STRING, 201, _T("Red(&R)"));
+	Popup.AppendMenu(MF_STRING, 202, _T("Green(&G)"));
+	Popup.AppendMenu(MF_STRING, 203, _T("Blue(&B)"));
+
+	CMenu *pMenuMain = GetMenu();
+	pMenuMain->AppendMenu(MF_POPUP, (UINT_PTR)Popup.Detach(), _T("Color(&C)"));
 
 	return 0;
 }

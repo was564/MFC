@@ -30,6 +30,7 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_UPDATE_COMMAND_UI(ID_COLOR_BLUE, &CChildView::OnUpdateColorBlue)
 	ON_UPDATE_COMMAND_UI(ID_COLOR_GREEN, &CChildView::OnUpdateColorGreen)
 	ON_UPDATE_COMMAND_UI(ID_COLOR_RED, &CChildView::OnUpdateColorRed)
+	ON_WM_CONTEXTMENU()
 END_MESSAGE_MAP()
 
 
@@ -60,7 +61,7 @@ void CChildView::OnPaint()
 	// 그리기 메시지에 대해서는 CWnd::OnPaint()를 호출하지 마십시오.
 }
 
-
+// WM_COMMAND 이벤트 발생하여 아래 작업 수행
 void CChildView::OnColorRed()
 {
 	m_color = RGB(255, 0, 0);
@@ -84,6 +85,7 @@ void CChildView::OnColorBlue()
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 }
 
+// WM_UPDATE_COMMAND 이벤트 발생하여 아래 작업 수행
 void CChildView::OnUpdateColorRed(CCmdUI *pCmdUI)
 {
 	if (m_color == RGB(255, 0, 0)) {
@@ -115,4 +117,13 @@ void CChildView::OnUpdateColorBlue(CCmdUI *pCmdUI)
 		pCmdUI->SetCheck(false);
 	}
 	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
+}
+
+void CChildView::OnContextMenu(CWnd* pWnd, CPoint point)
+{
+	CMenu * pMainMenu = AfxGetMainWnd()->GetMenu();
+	CMenu * pMenu = pMainMenu->GetSubMenu(4);
+	pMenu->TrackPopupMenu(TPM_LEFTALIGN, point.x, point.y, AfxGetMainWnd());
+
+	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
 }
