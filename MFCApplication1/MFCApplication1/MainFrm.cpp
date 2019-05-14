@@ -26,6 +26,8 @@ static UINT indicators[] =
 	ID_INDICATOR_CAPS,
 	ID_INDICATOR_NUM,
 	ID_INDICATOR_SCRL,
+	ID_INDICATOR_HA, // 추가
+	ID_INDICATOR_POS, // 추가
 };
 
 // CMainFrame 생성/소멸

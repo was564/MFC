@@ -4,7 +4,9 @@
 //
 #define IDD_ABOUTBOX                    100
 #define IDR_MAINFRAME                   128
+#define ID_INDICATOR_POS                129
 #define IDR_MFCApplication1TYPE         130
+#define ID_INDICATOR_HA                 130
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_32773                        32773

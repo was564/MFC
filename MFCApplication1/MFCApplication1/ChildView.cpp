@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "MFCApplication1.h"
 #include "ChildView.h"
+#include "MainFrm.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -31,6 +32,7 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_UPDATE_COMMAND_UI(ID_COLOR_GREEN, &CChildView::OnUpdateColorGreen)
 	ON_UPDATE_COMMAND_UI(ID_COLOR_RED, &CChildView::OnUpdateColorRed)
 	ON_WM_CONTEXTMENU()
+	ON_WM_MOUSEMOVE()
 END_MESSAGE_MAP()
 
 
@@ -126,4 +128,19 @@ void CChildView::OnContextMenu(CWnd* pWnd, CPoint point)
 	pMenu->TrackPopupMenu(TPM_LEFTALIGN, point.x, point.y, AfxGetMainWnd());
 
 	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
+}
+
+
+void CChildView::OnMouseMove(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	CMainFrame *pMain = (CMainFrame*)AfxGetMainWnd(); // MainFrm.h 헤더파일 포함 시킴
+	pMain->m_wndStatusBar.SetPaneText(1,  _T("HaHa")); // StatusBar에 HaHa 출력
+	// 클래스 CMainFrame에서 m_wndStatusBar 멤버를 protected -> public으로 변경함
+
+	CString str;
+	str.Format(_T("Mouse Position(%d, %d)"), point.x, point.y);
+	pMain->m_wndStatusBar.SetPaneText(2, str); // StatusBar에 str내용 출력
+
+	CWnd::OnMouseMove(nFlags, point);
 }
