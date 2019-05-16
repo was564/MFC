@@ -2,7 +2,8 @@
 // ChildView.cpp: CChildView 클래스의 구현
 //
 
-#include "stdafx.h"
+#include "pch.h"
+#include "framework.h"
 #include "HW3.h"
 #include "ChildView.h"
 

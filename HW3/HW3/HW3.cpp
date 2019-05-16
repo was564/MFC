@@ -1,8 +1,9 @@
 ﻿
-// HW3.cpp: 응용 프로그램에 대한 클래스 동작을 정의합니다.
+// HW3.cpp: 애플리케이션에 대한 클래스 동작을 정의합니다.
 //
 
-#include "stdafx.h"
+#include "pch.h"
+#include "framework.h"
 #include "afxwinappex.h"
 #include "afxdialogex.h"
 #include "HW3.h"
@@ -28,13 +29,13 @@ CHW3App::CHW3App() noexcept
 	// 다시 시작 관리자 지원
 	m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_ALL_ASPECTS;
 #ifdef _MANAGED
-	// 응용 프로그램을 공용 언어 런타임 지원을 사용하여 빌드한 경우(/clr):
+	// 애플리케이션을 공용 언어 런타임 지원을 사용하여 빌드한 경우(/clr):
 	//     1) 이 추가 설정은 다시 시작 관리자 지원이 제대로 작동하는 데 필요합니다.
 	//     2) 프로젝트에서 빌드하려면 System.Windows.Forms에 대한 참조를 추가해야 합니다.
 	System::Windows::Forms::Application::SetUnhandledExceptionMode(System::Windows::Forms::UnhandledExceptionMode::ThrowException);
 #endif
 
-	// TODO: 아래 응용 프로그램 ID 문자열을 고유 ID 문자열로 바꾸십시오(권장).
+	// TODO: 아래 애플리케이션 ID 문자열을 고유 ID 문자열로 바꾸십시오(권장).
 	// 문자열에 대한 서식: CompanyName.ProductName.SubProduct.VersionInformation
 	SetAppID(_T("HW3.AppID.NoVersion"));
 
@@ -51,7 +52,7 @@ CHW3App theApp;
 
 BOOL CHW3App::InitInstance()
 {
-	// 응용 프로그램 매니페스트가 ComCtl32.dll 버전 6 이상을 사용하여 비주얼 스타일을
+	// 애플리케이션 매니페스트가 ComCtl32.dll 버전 6 이상을 사용하여 비주얼 스타일을
 	// 사용하도록 지정하는 경우, Windows XP 상에서 반드시 InitCommonControlsEx()가 필요합니다. 
 	// InitCommonControlsEx()를 사용하지 않으면 창을 만들 수 없습니다.
 	INITCOMMONCONTROLSEX InitCtrls;
@@ -76,11 +77,11 @@ BOOL CHW3App::InitInstance()
 	// 해당 설정이 저장된 레지스트리 키를 변경하십시오.
 	// TODO: 이 문자열을 회사 또는 조직의 이름과 같은
 	// 적절한 내용으로 수정해야 합니다.
-	SetRegistryKey(_T("로컬 응용 프로그램 마법사에서 생성된 응용 프로그램"));
+	SetRegistryKey(_T("로컬 애플리케이션 마법사에서 생성된 애플리케이션"));
 
 
 	// 주 창을 만들기 위해 이 코드에서는 새 프레임 창 개체를
-	// 만든 다음 이를 응용 프로그램의 주 창 개체로 설정합니다.
+	// 만든 다음 이를 애플리케이션의 주 창 개체로 설정합니다.
 	CFrameWnd* pFrame = new CMainFrame;
 	if (!pFrame)
 		return FALSE;
