@@ -25,6 +25,17 @@ CChildView::~CChildView()
 
 BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_WM_PAINT()
+	ON_WM_MOUSEMOVE()
+	ON_WM_LBUTTONDOWN()
+	ON_WM_RBUTTONDOWN()
+	ON_WM_RBUTTONUP()
+	ON_WM_CREATE()
+	ON_WM_TIMER()
+	ON_COMMAND(ID_SHAPE_CIRCLE, &CChildView::OnShapeCircle)
+	ON_COMMAND(ID_SHAPE_RECTANGLE, &CChildView::OnShapeRectangle)
+	ON_COMMAND(ID_COLOR_BLUE, &CChildView::OnColorBlue)
+	ON_COMMAND(ID_COLOR_GREEN, &CChildView::OnColorGreen)
+	ON_COMMAND(ID_COLOR_RED, &CChildView::OnColorRed)
 END_MESSAGE_MAP()
 
 
@@ -53,3 +64,84 @@ void CChildView::OnPaint()
 	// 그리기 메시지에 대해서는 CWnd::OnPaint()를 호출하지 마십시오.
 }
 
+
+
+void CChildView::OnMouseMove(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	CWnd::OnMouseMove(nFlags, point);
+}
+
+
+void CChildView::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	CWnd::OnLButtonDown(nFlags, point);
+}
+
+
+void CChildView::OnRButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	CWnd::OnRButtonDown(nFlags, point);
+}
+
+
+void CChildView::OnRButtonUp(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	CWnd::OnRButtonUp(nFlags, point);
+}
+
+
+int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CWnd::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	// TODO:  여기에 특수화된 작성 코드를 추가합니다.
+
+	return 0;
+}
+
+
+void CChildView::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	CWnd::OnTimer(nIDEvent);
+}
+
+
+void CChildView::OnShapeCircle()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+}
+
+
+void CChildView::OnShapeRectangle()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+}
+
+
+void CChildView::OnColorBlue()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+}
+
+
+void CChildView::OnColorGreen()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+}
+
+
+void CChildView::OnColorRed()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+}
