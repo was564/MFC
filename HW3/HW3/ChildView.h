@@ -13,7 +13,6 @@ class CChildView : public CWnd
 // 생성입니다.
 public:
 	CChildView();
-
 // 특성입니다.
 public:
 
@@ -44,5 +43,22 @@ public:
 	afx_msg void OnColorBlue();
 	afx_msg void OnColorGreen();
 	afx_msg void OnColorRed();
+	afx_msg void OnErase();
+private:
+	CList<CPoint> points;
+	CList<int> shapes;
+	CList<int> colors;
+	int color, shape, count;
+	CRect eraser;
+public:
+	afx_msg void OnColorBlack();
+	afx_msg void OnUpdateColorBlack(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateColorBlue(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateColorGreen(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateColorRed(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateErase(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateShapeCircle(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateShapeRectangle(CCmdUI* pCmdUI);
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 };
 
