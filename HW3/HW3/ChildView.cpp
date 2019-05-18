@@ -21,7 +21,7 @@
 
 // CChildView
 
-CChildView::CChildView() : color(BLACK), shape(RECTANGLE), count(0)
+CChildView::CChildView() : color(BLACK), shape(RECTANGLE), count(0), eraseMode(false), direction(0, 0)
 {
 }
 
@@ -53,6 +53,7 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_UPDATE_COMMAND_UI(ID_SHAPE_CIRCLE, &CChildView::OnUpdateShapeCircle)
 	ON_UPDATE_COMMAND_UI(ID_SHAPE_RECTANGLE, &CChildView::OnUpdateShapeRectangle)
 	ON_WM_ERASEBKGND()
+	ON_WM_KEYDOWN()
 END_MESSAGE_MAP()
 
 
@@ -93,11 +94,12 @@ void CChildView::OnPaint()
 	POSITION sh = shapes.GetHeadPosition();
 	POSITION co = colors.GetHeadPosition();
 	CRect rect;
-	CBrush rbrush, gbrush, bbrush, dbrush;
+	CBrush rbrush, gbrush, bbrush, dbrush, wbrush;
 	rbrush.CreateSolidBrush(RGB(255, 0, 0));
 	gbrush.CreateSolidBrush(RGB(0, 255, 0));
 	bbrush.CreateSolidBrush(RGB(0, 0, 255));
 	dbrush.CreateSolidBrush(RGB(0, 0, 0));
+	wbrush.CreateSolidBrush(RGB(255, 255, 255));
 
 	while (po != NULL) {
 		rect.SetRect(points.GetAt(po).x - 5,
@@ -146,6 +148,9 @@ void CChildView::OnPaint()
 		colors.GetNext(co);
 	}
 
+	memDC.SelectObject(&wbrush);
+	memDC.Rectangle(eraser);
+
 	dc.BitBlt(0, 0, client.Width(), client.Height(), &memDC, 0, 0, SRCCOPY);
 	// TODO: 여기에 메시지 처리기 코드를 추가합니다.
 	
@@ -177,7 +182,8 @@ void CChildView::OnMouseMove(UINT nFlags, CPoint point)
 void CChildView::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-
+	eraseMode = false;
+	direction.SetPoint(0, 0);
 	colors.AddTail(color);
 	shapes.AddTail(shape);
 	points.AddTail(point);
@@ -204,9 +210,38 @@ void CChildView::OnRButtonDown(UINT nFlags, CPoint point)
 void CChildView::OnRButtonUp(UINT nFlags, CPoint point)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
-
-	eraser.bottom = point.y;
-	eraser.right = point.x;
+	POSITION po = points.GetHeadPosition();
+	POSITION sh = shapes.GetHeadPosition();
+	POSITION co = colors.GetHeadPosition();
+	POSITION pos, sha, col;
+	if (point.y < eraser.top) {
+		eraser.bottom = eraser.top;
+		eraser.top = point.y;
+	}
+	if (point.x < eraser.left) {
+		eraser.right = eraser.left;
+		eraser.left = point.x;
+	}
+	while (po != NULL) {
+		if (points.GetAt(po).x < eraser.right && points.GetAt(po).x > eraser.left) {
+			if (points.GetAt(po).y < eraser.bottom && points.GetAt(po).y > eraser.top) {
+				pos = po;
+				sha = sh;
+				col = co;
+				points.GetNext(po);
+				shapes.GetNext(sh);
+				colors.GetNext(co);
+				points.RemoveAt(pos);
+				shapes.RemoveAt(sha);
+				colors.RemoveAt(col);
+				count--;
+				continue;
+			}
+		}
+		points.GetNext(po);
+		shapes.GetNext(sh);
+		colors.GetNext(co);
+	}
 	Invalidate();
 
 	CWnd::OnRButtonUp(nFlags, point);
@@ -218,6 +253,7 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
+	SetTimer(0, 30, NULL);
 	// TODO:  여기에 특수화된 작성 코드를 추가합니다.
 
 	return 0;
@@ -227,6 +263,46 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CChildView::OnTimer(UINT_PTR nIDEvent)
 {
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	if (eraseMode && nIDEvent == 0) {
+		CRect rect;
+		GetClientRect(rect);
+		eraser.bottom += direction.y;
+		eraser.left += direction.x;
+		eraser.top += direction.y;
+		eraser.right += direction.x;
+		if (eraser.left <= 0 || eraser.right >= rect.right) {
+			direction.x = -direction.x;
+		}
+		if (eraser.top <= 0 || eraser.bottom >= rect.bottom) {
+			direction.y = -direction.y;
+		}
+		POSITION po = points.GetHeadPosition();
+		POSITION sh = shapes.GetHeadPosition();
+		POSITION co = colors.GetHeadPosition();
+		POSITION pos, sha, col;
+		while (po != NULL) {
+			if (points.GetAt(po).x < eraser.right && points.GetAt(po).x > eraser.left) {
+				if (points.GetAt(po).y < eraser.bottom && points.GetAt(po).y > eraser.top) {
+					pos = po;
+					sha = sh;
+					col = co;
+					points.GetNext(po);
+					shapes.GetNext(sh);
+					colors.GetNext(co);
+					points.RemoveAt(pos);
+					shapes.RemoveAt(sha);
+					colors.RemoveAt(col);
+					count--;
+					continue;
+				}
+			}
+			points.GetNext(po);
+			shapes.GetNext(sh);
+			colors.GetNext(co);
+		}
+	}
+	Invalidate();
 
 	CWnd::OnTimer(nIDEvent);
 }
@@ -275,6 +351,14 @@ void CChildView::OnColorBlack()
 void CChildView::OnErase()
 {
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+
+	direction.SetPoint(0, 0);
+	if (eraseMode) {
+		eraseMode = false;
+	}
+	else {
+		eraseMode = true;
+	}
 }
 
 
@@ -329,7 +413,12 @@ void CChildView::OnUpdateColorRed(CCmdUI* pCmdUI)
 void CChildView::OnUpdateErase(CCmdUI* pCmdUI)
 {
 	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
-	
+	if (eraseMode) {
+		pCmdUI->SetCheck(true);
+	}
+	else {
+		pCmdUI->SetCheck(false);
+	}
 }
 
 
@@ -363,4 +452,26 @@ BOOL CChildView::OnEraseBkgnd(CDC* pDC)
 
 	// return CWnd::OnEraseBkgnd(pDC);
 	return true;
+}
+
+
+void CChildView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	if (nChar == VK_UP) {
+		direction.SetPoint(0, -3);
+	}
+	else if (nChar == VK_DOWN) {
+		direction.SetPoint(0, 3);
+	}
+	else if (nChar == VK_LEFT) {
+		direction.SetPoint(-3, 0);
+	}
+	else if (nChar == VK_RIGHT) {
+		direction.SetPoint(3, 0);
+	}
+	Invalidate();
+
+	CWnd::OnKeyDown(nChar, nRepCnt, nFlags);
 }

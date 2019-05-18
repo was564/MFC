@@ -50,6 +50,8 @@ private:
 	CList<int> colors;
 	int color, shape, count;
 	CRect eraser;
+	bool eraseMode;
+	CPoint direction;
 public:
 	afx_msg void OnColorBlack();
 	afx_msg void OnUpdateColorBlack(CCmdUI* pCmdUI);
@@ -60,5 +62,6 @@ public:
 	afx_msg void OnUpdateShapeCircle(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateShapeRectangle(CCmdUI* pCmdUI);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 };
 
