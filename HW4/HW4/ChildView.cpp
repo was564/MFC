@@ -223,9 +223,26 @@ void CChildView::OnButton3Click() { // load
 void CChildView::OnButton4Click() { // replay
 	m_Replay.SetCheck(true);
 	movePos = data.GetHeadPosition();
+	if (movePos == NULL) {
+		play = false;
+		m_Replay.SetCheck(false);
+		return;
+	}
 	moveRect = data.GetHead();
 	moveSelect = 1;
 	count = -1;
+	temp = movePos;
+	if (temp == NULL) {
+		play = false;
+		m_Replay.SetCheck(false);
+		return;
+	}
+	data.GetNext(temp);
+	if (temp == NULL) {
+		play = false;
+		m_Replay.SetCheck(false);
+		return;
+	}
 	temp = movePos;
 	SetTimer(0, 30, NULL);
 	play = true;
@@ -254,6 +271,7 @@ void CChildView::OnTimer(UINT_PTR nIDEvent)
 			data.GetNext(temp);
 		}
 		if (temp == NULL) {
+			moveSelect = 1;
 			count = 0;
 			movePos = data.GetHeadPosition();
 			temp = movePos;

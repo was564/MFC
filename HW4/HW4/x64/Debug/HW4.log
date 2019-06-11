@@ -1,0 +1,5 @@
+﻿  ChildView.cpp
+c:\users\b409_16\desktop\hw4\hw4\childview.cpp(157): warning C4244: '인수': 'INT_PTR'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\b409_16\desktop\hw4\hw4\childview.cpp(158): warning C4244: '인수': 'INT_PTR'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\b409_16\desktop\hw4\hw4\childview.cpp(185): warning C4244: '=': 'INT_PTR'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  HW4.vcxproj -> C:\Users\B409_16\Desktop\HW4\x64\Debug\HW4.exe
